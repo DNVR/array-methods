@@ -1,0 +1,25 @@
+{
+  "name": "@dnvr/array-methods",
+  "version": "1.0.0",
+  "description": "A JavaScript Array methods library.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build:clear": "npx rimraf dist",
+    "build:construct": "npx tsc -p .",
+    "build": "npm run build:clear && npm run build:construct"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DNVR/array-methods.git"
+  },
+  "author": "Denver Dias",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DNVR/array-methods/issues"
+  },
+  "homepage": "https://github.com/DNVR/array-methods#readme",
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.7"
+  }
+}
