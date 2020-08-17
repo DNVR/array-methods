@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "A JavaScript Array methods library.",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build:clear": "npx rimraf dist",
     "build:construct": "npx tsc -p .",
