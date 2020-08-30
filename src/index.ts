@@ -21,7 +21,12 @@ export const splice: <K>( haystack: ArrayLike<K>, start?: number, deleteCount?: 
 export const slice: <K>( haystack: ArrayLike<K>, begin?: number, end?: number ) => Array<K> = call.bind( array.slice ) as any
 
 // Array forEach
-export const forEach: <K, T>( haystack: ArrayLike<K>, functionCallback: ( this: typeof thisArg, entry?: K, index?: number, array?: typeof haystack ) => void, thisArg?: T ) => void = call.bind( array.forEach ) as any
+export const forEach: {
+  <K, T> ( haystack: ArrayLike<K>, functionCallback: ( this: typeof thisArg ) => void, thisArg?: T ): void
+  <K, T> ( haystack: ArrayLike<K>, functionCallback: ( this: typeof thisArg, entry: K ) => void, thisArg?: T ): void
+  <K, T> ( haystack: ArrayLike<K>, functionCallback: ( this: typeof thisArg, entry: K, index: number ) => void, thisArg?: T ): void
+  <K, T> ( haystack: ArrayLike<K>, functionCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => void, thisArg?: T ): void
+} = call.bind( array.forEach ) as any
 
 // Array map
 export const map: {
@@ -67,15 +72,30 @@ export const reduceRight: <K, L>( haystack: ArrayLike<K>, reductionCallback: ( a
 export const includes: <K>( haystack: ArrayLike<K>, needle: K, from?: number ) => boolean = call.bind( array.includes ) as any
 
 // Array check conditions
-export const find: <K, T>( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry?: K, index?: number, array?: typeof haystack ) => boolean, thisArg?: T ) => K = call.bind( array.find ) as any
-export const findIndex: <K, T>( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry?: K, index?: number, array?: typeof haystack ) => boolean, thisArg?: T ) => number = call.bind( array.findIndex ) as any
+export const find: {
+  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg ) => boolean, thisArg?: T ): K
+  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K ) => boolean, thisArg?: T ): K
+  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K, index: number ) => boolean, thisArg?: T ): K
+  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg?: T ): K
+} = call.bind( array.find ) as any
+export const findIndex: {
+  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg ) => boolean, thisArg?: T ): number
+  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K ) => boolean, thisArg?: T ): number
+  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K, index: number ) => boolean, thisArg?: T ): number
+  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg?: T ): number
+} = call.bind( array.findIndex ) as any
 
 // Array concatenation
 export const concat: <K>( ...parts: ArrayLike<K>[] ) => Array<K> = call.bind( array.concat ) as any
 
 // Array flattening
 export const flat: <K, D extends number>( haystack: ArrayLike<K>, depth?: D ) => Array<FlatArray<Array<K>, D>> = call.bind( array.flat ) as any
-export const flatMap: <K, T, R>( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry?: K, index?: number, array?: Array<FlatArray<Array<K>, 1>> ) => R, thisArg?: T ) => Array<R> = call.bind( array.flatMap ) as any
+export const flatMap: {
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg ) => R, thisArg?: T ): Array<FlatArray<Array<K>, 1>>
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K ) => R, thisArg?: T ): Array<FlatArray<Array<K>, 1>>
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K, index: number ) => R, thisArg?: T ): Array<FlatArray<Array<K>, 1>>
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => R, thisArg?: T ): Array<FlatArray<Array<K>, 1>>
+} = call.bind( array.flatMap ) as any
 
 export const entries: <K>( haystack: ArrayLike<K> ) => Iterator<[ number, K ]> = call.bind( array.entries ) as any
 export const keys: <K>( haystack: ArrayLike<K> ) => Iterator<number> = call.bind( array.keys ) as any
