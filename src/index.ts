@@ -24,17 +24,40 @@ export const slice: <K>( haystack: ArrayLike<K>, begin?: number, end?: number ) 
 export const forEach: <K, T>( haystack: ArrayLike<K>, functionCallback: ( this: typeof thisArg, entry?: K, index?: number, array?: typeof haystack ) => void, thisArg?: T ) => void = call.bind( array.forEach ) as any
 
 // Array map
-export const map: <K, T, R>( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry?: K, index?: number, array?: typeof haystack ) => R, thisArg?: T ) => Array<R> = call.bind( array.map ) as any
+export const map: {
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg ) => R, thisArg?: T ): Array<R>
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K ) => R, thisArg?: T ): Array<R>
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K, index: number ) => R, thisArg?: T ): Array<R>
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => R, thisArg?: T ): Array<R>
+} = call.bind( array.map ) as any
 
 // Array extraction
-export const filter: <K, T>( haystack: ArrayLike<K>, filterCallback: ( this: typeof thisArg, entry?: K, index?: number, array?: typeof haystack ) => boolean, thisArg?: T ) => Array<K> = call.bind( array.filter ) as any
+export const filter: {
+  <K, T> ( haystack: ArrayLike<K>, filterCallback: ( this: typeof thisArg ) => boolean, thisArg?: T ): Array<K>
+  <K, T> ( haystack: ArrayLike<K>, filterCallback: ( this: typeof thisArg, entry: K ) => boolean, thisArg?: T ): Array<K>
+  <K, T> ( haystack: ArrayLike<K>, filterCallback: ( this: typeof thisArg, entry: K, index: number ) => boolean, thisArg?: T ): Array<K>
+  <K, T> ( haystack: ArrayLike<K>, filterCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg?: T ): Array<K>
+} = call.bind( array.filter ) as any
 
 // Array sorting
-export const sort: <K>( haystack: ArrayLike<K>, sortCallback: ( a: K, b: K ) => number ) => typeof haystack = call.bind( array.sort ) as any
+export const sort: {
+  <K> ( haystack: ArrayLike<K> ): typeof haystack
+  <K> ( haystack: ArrayLike<K>, sortCallback: ( a: K, b: K ) => number ): typeof haystack
+} = call.bind( array.sort ) as any
 
 // Array condition checking
-export const every: <K, T>( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry?: K, index?: number, array?: typeof haystack ) => boolean, thisArg?: T ) => boolean = call.bind( array.every ) as any
-export const some: <K, T>( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry?: K, index?: number, array?: typeof haystack ) => boolean, thisArg?: T ) => boolean = call.bind( array.some ) as any
+export const every: {
+  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg ) => boolean, thisArg?: T ): boolean
+  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K ) => boolean, thisArg?: T ): boolean
+  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K, index: number ) => boolean, thisArg?: T ): boolean
+  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg?: T ): boolean
+} = call.bind( array.every ) as any
+export const some: {
+  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg ) => boolean, thisArg?: T ): boolean
+  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K ) => boolean, thisArg?: T ): boolean
+  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K, index: number ) => boolean, thisArg?: T ): boolean
+  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg?: T ): boolean
+} = call.bind( array.some ) as any
 
 // Array reduction
 export const reduce: <K, L>( haystack: ArrayLike<K>, reductionCallback: ( accumulator: L, entry: K, index?: number, array?: typeof haystack ) => L, initial: L ) => L = call.bind( array.reduce ) as any
