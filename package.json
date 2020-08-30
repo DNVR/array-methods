@@ -2,7 +2,7 @@
   "name": "@dnvr/array-methods",
   "version": "1.0.3",
   "description": "A JavaScript Array methods library.",
-  "main": "dist/index.js",
+  "browser": "dist/index.js",
   "types": "dist/index.d.ts",
   "publishConfig": {
     "access": "public"
