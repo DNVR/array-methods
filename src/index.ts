@@ -37,12 +37,18 @@ export const map: {
 } = call.bind( array.map ) as any
 
 // Array extraction
-export const filter: {
-  <K, T> ( haystack: ArrayLike<K>, filterCallback: ( this: typeof thisArg ) => boolean, thisArg?: T ): Array<K>
-  <K, T> ( haystack: ArrayLike<K>, filterCallback: ( this: typeof thisArg, entry: K ) => boolean, thisArg?: T ): Array<K>
-  <K, T> ( haystack: ArrayLike<K>, filterCallback: ( this: typeof thisArg, entry: K, index: number ) => boolean, thisArg?: T ): Array<K>
-  <K, T> ( haystack: ArrayLike<K>, filterCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg?: T ): Array<K>
-} = call.bind( array.filter ) as any
+interface Filterer {
+  <K> ( haystack: ArrayLike<K>, filterCallback: () => boolean ): Array<K>
+  <K> ( haystack: ArrayLike<K>, filterCallback: ( entry: K ) => boolean ): Array<K>
+  <K> ( haystack: ArrayLike<K>, filterCallback: ( entry: K, index: number ) => boolean ): Array<K>
+  <K> ( haystack: ArrayLike<K>, filterCallback: ( entry: K, index: number, array: typeof haystack ) => boolean ): Array<K>
+
+  <K, T> ( haystack: ArrayLike<K>, filterCallback: ( this: T ) => boolean, thisArg: T ): Array<K>
+  <K, T> ( haystack: ArrayLike<K>, filterCallback: ( this: T, entry: K ) => boolean, thisArg: T ): Array<K>
+  <K, T> ( haystack: ArrayLike<K>, filterCallback: ( this: T, entry: K, index: number ) => boolean, thisArg: T ): Array<K>
+  <K, T> ( haystack: ArrayLike<K>, filterCallback: ( this: T, entry: K, index: number, array: typeof haystack ) => boolean, thisArg: T ): Array<K>
+}
+export const filter: Filterer = call.bind( array.filter ) as any
 
 // Array sorting
 export const sort: {
