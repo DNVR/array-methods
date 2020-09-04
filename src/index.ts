@@ -57,18 +57,19 @@ export const sort: {
 } = call.bind( array.sort ) as any
 
 // Array condition checking
-export const every: {
-  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg ) => boolean, thisArg?: T ): boolean
-  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K ) => boolean, thisArg?: T ): boolean
-  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K, index: number ) => boolean, thisArg?: T ): boolean
-  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg?: T ): boolean
-} = call.bind( array.every ) as any
-export const some: {
-  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg ) => boolean, thisArg?: T ): boolean
-  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K ) => boolean, thisArg?: T ): boolean
-  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K, index: number ) => boolean, thisArg?: T ): boolean
-  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg?: T ): boolean
-} = call.bind( array.some ) as any
+interface Conditioner {
+  <K> ( haystack: ArrayLike<K>, conditionCallback: () => boolean ): boolean
+  <K> ( haystack: ArrayLike<K>, conditionCallback: ( entry: K ) => boolean ): boolean
+  <K> ( haystack: ArrayLike<K>, conditionCallback: ( entry: K, index: number ) => boolean ): boolean
+  <K> ( haystack: ArrayLike<K>, conditionCallback: ( entry: K, index: number, array: typeof haystack ) => boolean ): boolean
+
+  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg ) => boolean, thisArg: T ): boolean
+  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K ) => boolean, thisArg: T ): boolean
+  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K, index: number ) => boolean, thisArg: T ): boolean
+  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg: T ): boolean
+}
+export const every: Conditioner = call.bind( array.every ) as any
+export const some: Conditioner = call.bind( array.some ) as any
 
 // Array reduction
 export const reduce: <K, L>( haystack: ArrayLike<K>, reductionCallback: ( accumulator: L, entry: K, index?: number, array?: typeof haystack ) => L, initial: L ) => L = call.bind( array.reduce ) as any
