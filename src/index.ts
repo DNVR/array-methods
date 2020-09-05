@@ -77,10 +77,18 @@ export const findIndex: {
 export const concat: <K>( ...parts: ArrayLike<K>[] ) => Array<K> = call.bind( array.concat ) as any
 
 // Array flattening
-export const flat: <K, D extends number>( haystack: ArrayLike<K>, depth?: D ) => Array<FlatArray<Array<K>, D>> = call.bind( array.flat ) as any
+type FlattenedArray<A, D extends number> = {
+  "done": A,
+  "recur": A extends Array<infer T> ? FlattenedArray<T, [ -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ][ D ]> : A
+}[ D extends -1 ? "done" : "recur" ]
+
+export const flat: {
+  <K> ( haystack: ArrayLike<K> ): Array<FlattenedArray<Array<K>, 1>>
+  <K, D extends number> ( haystack: ArrayLike<K>, depth: D ): Array<FlattenedArray<Array<K>, D>>
+} = call.bind( array.flat ) as any
 export const flatMap: {
-  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( entry: K, index: number, array: typeof haystack ) => R ): Array<FlatArray<Array<K>, 1>>
-  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => R, thisArg: T ): Array<FlatArray<Array<K>, 1>>
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( entry: K, index: number, array: typeof haystack ) => R ): Array<FlattenedArray<Array<K>, 1>>
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => R, thisArg: T ): Array<FlattenedArray<Array<K>, 1>>
 } = call.bind( array.flatMap ) as any
 
 export const entries: <K>( haystack: ArrayLike<K> ) => Iterator<[ number, K ]> = call.bind( array.entries ) as any
