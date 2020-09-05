@@ -22,18 +22,14 @@ export const slice: <K>( haystack: ArrayLike<K>, begin?: number, end?: number ) 
 
 // Array forEach
 export const forEach: {
-  <K, T> ( haystack: ArrayLike<K>, functionCallback: ( this: typeof thisArg ) => void, thisArg?: T ): void
-  <K, T> ( haystack: ArrayLike<K>, functionCallback: ( this: typeof thisArg, entry: K ) => void, thisArg?: T ): void
-  <K, T> ( haystack: ArrayLike<K>, functionCallback: ( this: typeof thisArg, entry: K, index: number ) => void, thisArg?: T ): void
-  <K, T> ( haystack: ArrayLike<K>, functionCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => void, thisArg?: T ): void
+  <K, T> ( haystack: ArrayLike<K>, functionCallback: ( entry: K, index: number, array: typeof haystack ) => void ): void
+  <K, T> ( haystack: ArrayLike<K>, functionCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => void, thisArg: T ): void
 } = call.bind( array.forEach ) as any
 
 // Array map
 export const map: {
-  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg ) => R, thisArg?: T ): Array<R>
-  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K ) => R, thisArg?: T ): Array<R>
-  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K, index: number ) => R, thisArg?: T ): Array<R>
-  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => R, thisArg?: T ): Array<R>
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( entry: K, index: number, array: typeof haystack ) => R ): Array<R>
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => R, thisArg: T ): Array<R>
 } = call.bind( array.map ) as any
 
 // Array extraction
@@ -50,38 +46,31 @@ export const sort: {
 
 // Array condition checking
 interface Conditioner {
-  <K> ( haystack: ArrayLike<K>, conditionCallback: () => boolean ): boolean
-  <K> ( haystack: ArrayLike<K>, conditionCallback: ( entry: K ) => boolean ): boolean
-  <K> ( haystack: ArrayLike<K>, conditionCallback: ( entry: K, index: number ) => boolean ): boolean
-  <K> ( haystack: ArrayLike<K>, conditionCallback: ( entry: K, index: number, array: typeof haystack ) => boolean ): boolean
-
-  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg ) => boolean, thisArg: T ): boolean
-  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K ) => boolean, thisArg: T ): boolean
-  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K, index: number ) => boolean, thisArg: T ): boolean
+  <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( entry: K, index: number, array: typeof haystack ) => boolean ): boolean
   <K, T> ( haystack: ArrayLike<K>, conditionCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg: T ): boolean
 }
 export const every: Conditioner = call.bind( array.every ) as any
 export const some: Conditioner = call.bind( array.some ) as any
 
 // Array reduction
-export const reduce: <K, L>( haystack: ArrayLike<K>, reductionCallback: ( accumulator: L, entry: K, index?: number, array?: typeof haystack ) => L, initial: L ) => L = call.bind( array.reduce ) as any
-export const reduceRight: <K, L>( haystack: ArrayLike<K>, reductionCallback: ( accumulator: L, entry: K, index?: number, array?: typeof haystack ) => L, initial: L ) => L = call.bind( array.reduceRight ) as any
+interface Reductioner {
+  <K, L> ( haystack: ArrayLike<K>, reductionCallback: ( accumulator: L, entry: K, index: number, array: typeof haystack ) => L ): L
+  <K, L> ( haystack: ArrayLike<K>, reductionCallback: ( accumulator: L, entry: K, index: number, array: typeof haystack ) => L, initial: L ): L
+}
+export const reduce: Reductioner = call.bind( array.reduce ) as any
+export const reduceRight: Reductioner = call.bind( array.reduceRight ) as any
 
 // Array check element
 export const includes: <K>( haystack: ArrayLike<K>, needle: K, from?: number ) => boolean = call.bind( array.includes ) as any
 
 // Array check conditions
 export const find: {
-  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg ) => boolean, thisArg?: T ): K
-  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K ) => boolean, thisArg?: T ): K
-  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K, index: number ) => boolean, thisArg?: T ): K
-  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg?: T ): K
+  <K, T> ( haystack: ArrayLike<K>, findCallback: ( entry: K, index: number, array: typeof haystack ) => boolean ): K
+  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg: T ): K
 } = call.bind( array.find ) as any
 export const findIndex: {
-  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg ) => boolean, thisArg?: T ): number
-  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K ) => boolean, thisArg?: T ): number
-  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K, index: number ) => boolean, thisArg?: T ): number
-  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg?: T ): number
+  <K, T> ( haystack: ArrayLike<K>, findCallback: ( entry: K, index: number, array: typeof haystack ) => boolean ): number
+  <K, T> ( haystack: ArrayLike<K>, findCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => boolean, thisArg: T ): number
 } = call.bind( array.findIndex ) as any
 
 // Array concatenation
@@ -90,10 +79,8 @@ export const concat: <K>( ...parts: ArrayLike<K>[] ) => Array<K> = call.bind( ar
 // Array flattening
 export const flat: <K, D extends number>( haystack: ArrayLike<K>, depth?: D ) => Array<FlatArray<Array<K>, D>> = call.bind( array.flat ) as any
 export const flatMap: {
-  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg ) => R, thisArg?: T ): Array<FlatArray<Array<K>, 1>>
-  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K ) => R, thisArg?: T ): Array<FlatArray<Array<K>, 1>>
-  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K, index: number ) => R, thisArg?: T ): Array<FlatArray<Array<K>, 1>>
-  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => R, thisArg?: T ): Array<FlatArray<Array<K>, 1>>
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( entry: K, index: number, array: typeof haystack ) => R ): Array<FlatArray<Array<K>, 1>>
+  <K, T, R> ( haystack: ArrayLike<K>, mapCallback: ( this: typeof thisArg, entry: K, index: number, array: typeof haystack ) => R, thisArg: T ): Array<FlatArray<Array<K>, 1>>
 } = call.bind( array.flatMap ) as any
 
 export const entries: <K>( haystack: ArrayLike<K> ) => Iterator<[ number, K ]> = call.bind( array.entries ) as any
