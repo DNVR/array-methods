@@ -3,7 +3,7 @@ let { call } = function () { }
 let array: Array<any> = []
 
 namespace ArrayMethods {
-  
+
   // Array element position
   export const indexOf: <K>( haystack: ArrayLike<K>, entry: K, fromIndex?: number ) => number = call.bind( array.indexOf ) as any
   export const lastIndexOf: <K>( haystack: ArrayLike<K>, entry: K, fromIndex?: number ) => number = call.bind( array.lastIndexOf ) as any
@@ -97,3 +97,40 @@ namespace ArrayMethods {
   export const keys: <K>( haystack: ArrayLike<K> ) => Iterator<number> = call.bind( array.keys ) as any
   export const values: <K>( haystack: ArrayLike<K> ) => Iterator<K> = call.bind( array.values ) as any
 }
+
+export default ArrayMethods
+
+export const indexOf: typeof ArrayMethods.indexOf = ArrayMethods.indexOf
+export const lastIndexOf: typeof ArrayMethods.lastIndexOf = ArrayMethods.lastIndexOf
+
+export const push: typeof ArrayMethods.push = ArrayMethods.push
+export const pop: typeof ArrayMethods.pop = ArrayMethods.pop
+export const shift: typeof ArrayMethods.shift = ArrayMethods.shift
+export const unshift: typeof ArrayMethods.unshift = ArrayMethods.unshift
+
+export const splice: typeof ArrayMethods.splice = ArrayMethods.splice
+export const slice: typeof ArrayMethods.slice = ArrayMethods.slice
+
+export const forEach: typeof ArrayMethods.forEach = ArrayMethods.forEach
+
+export const map: typeof ArrayMethods.map = ArrayMethods.map
+
+export const filter: typeof ArrayMethods.filter = ArrayMethods.filter
+
+export const sort: typeof ArrayMethods.sort = ArrayMethods.sort
+
+export const every: typeof ArrayMethods.every = ArrayMethods.every
+export const some: typeof ArrayMethods.some = ArrayMethods.some
+
+export const reduce: typeof ArrayMethods.reduce = ArrayMethods.reduce
+export const reduceRight: typeof ArrayMethods.reduceRight = ArrayMethods.reduceRight
+
+export const includes: typeof ArrayMethods.includes = ArrayMethods.includes
+
+export const find: typeof ArrayMethods.find = ArrayMethods.find
+export const findIndex: typeof ArrayMethods.findIndex = ArrayMethods.findIndex
+
+export const concat: typeof ArrayMethods.concat = ArrayMethods.concat
+
+export const flat: typeof ArrayMethods.flat = ArrayMethods.flat
+export const flatMap: typeof ArrayMethods.flatMap = ArrayMethods.flatMap
