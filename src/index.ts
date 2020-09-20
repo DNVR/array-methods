@@ -9,15 +9,15 @@ namespace ArrayMethods {
   export const lastIndexOf: <K>( collection: ArrayLike<K>, entry: K, fromIndex?: number ) => number = call.bind( array.lastIndexOf ) as any
 
   // Array element addition
-  export const push: <K>( collection: ArrayLike<K>, ...needle: Array<K> ) => number = call.bind( array.push ) as any
-  export const unshift: <K>( collection: ArrayLike<K>, ...needle: Array<K> ) => number = call.bind( array.unshift ) as any
+  export const push: <K>( collection: ArrayLike<K>, ...element: Array<K> ) => number = call.bind( array.push ) as any
+  export const unshift: <K>( collection: ArrayLike<K>, ...element: Array<K> ) => number = call.bind( array.unshift ) as any
 
   // Array element extraction
   export const pop: <K>( collection: ArrayLike<K> ) => K = call.bind( array.pop ) as any
   export const shift: <K>( collection: ArrayLike<K> ) => K = call.bind( array.shift ) as any
 
   // Array element splicing
-  export const splice: <K>( collection: ArrayLike<K>, start?: number, deleteCount?: number, ...needle: Array<K> ) => Array<K> = call.bind( array.splice ) as any
+  export const splice: <K>( collection: ArrayLike<K>, start?: number, deleteCount?: number, ...element: Array<K> ) => Array<K> = call.bind( array.splice ) as any
 
   // Array slices
   export const slice: <K>( collection: ArrayLike<K>, begin?: number, end?: number ) => Array<K> = call.bind( array.slice ) as any
@@ -63,7 +63,7 @@ namespace ArrayMethods {
   export const reduceRight: Reductioner = call.bind( array.reduceRight ) as any
 
   // Array check element
-  export const includes: <K>( collection: ArrayLike<K>, needle: K, from?: number ) => boolean = call.bind( array.includes ) as any
+  export const includes: <K>( collection: ArrayLike<K>, element: K, from?: number ) => boolean = call.bind( array.includes ) as any
 
   // Array check conditions
   export const find: {
